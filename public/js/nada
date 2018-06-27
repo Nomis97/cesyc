@@ -1,0 +1,93 @@
+function mostrarficha(id_usuario,tipo) {
+  //funcion para mostrar y etditar la informacion del usuario
+ 
+  $("#usuario_seleccionado").val(id_usuario); // leccion10
+  $("#capa_modal").show();
+  $("#capa_para_edicion").show();
+  if(tipo==1){var url = "form_editar_usuario/"+id_usuario+""; }else{ var url = "info_datos_usuario/"+id_usuario+""; }
+  $("#contenido_capa_edicion").html($("#cargador_empresa").html());  //leccion 10
+  $.get(url,function(resul){
+  $("#contenido_capa_edicion").html(resul);  //leccion 10
+  })
+irarriba();
+}
+
+
+$(document).on("click",".div_modal",function(e){
+ //funcion para ocultar las capas modales
+ $("#capa_modal").hide();
+ $("#capa_para_edicion").hide();
+ $("#contenido_capa_edicion").html("");  //leccion 10
+
+})  
+
+
+  //leccion 8 y 9
+$(document).on("submit",".formarchivo",function(e){
+
+    
+        e.preventDefault();
+        var formu=$(this);
+        var nombreform=$(this).attr("id");
+        var rs=false; //leccion 10
+        var seccion_sel=  $("#seccion_seleccionada").val();
+        if(nombreform=="f_subir_imagen" ){ var miurl="subir_imagen_usuario";  var divresul="notificacion_resul_fci";   }
+        if(nombreform=="f_cargar_datos_usuarios" ){ var miurl="cargar_datos_usuarios";  var divresul="notificacion_resul_fcdu"; rs=true; }
+        if(nombreform=="f_agregar_publicacion" ){ var miurl="agregar_publicacion_usuario";  var divresul="notificacion_resul_fap"; rs=true; }
+        if(nombreform=="f_agregar_proyectos" ){ var miurl="agregar_proyectos_usuario";  var divresul="notificacion_resul_fapr"; rs=true; }
+         if(nombreform=="f_enviar_correo" ){ var miurl="enviar_correo";  var divresul="contenido_principal";   }
+
+        //información del formulario
+        var formData = new FormData($("#"+nombreform+"")[0]);
+
+        //hacemos la petición ajax   
+        $.ajax({
+            url: miurl,  
+            type: 'POST',
+     
+            // Form data
+            //datos del formulario
+            data: formData,
+            //necesario para subir archivos via ajax
+            cache: false,
+            contentType: false,
+            processData: false,
+            //mientras enviamos el archivo
+            beforeSend: function(){
+              $("#"+divresul+"").html($("#cargador_empresa").html());                
+            },
+            //una vez finalizado correctamente
+            success: function(data){
+              $("#"+divresul+"").html(data);
+              $("#fotografia_usuario").attr('src', $("#fotografia_usuario").attr('src') + '?' + Math.random() );  
+
+                 if(rs ){
+                         $('#'+nombreform+'').trigger("reset");
+                         mostrarseccion(seccion_sel);
+                        }             
+            },
+            //si ha ocurrido un error
+            error: function(data){
+               alert("ha ocurrido un error") ;
+                
+            }
+        });
+
+irarriba();
+
+});
+
+function mostrarseccion(arg){
+  var id_usuario=$("#usuario_seleccionado").val(); 
+  $("#seccion_seleccionada").val(arg);
+  if(arg==1){ var url = "form_editar_usuario/"+id_usuario+""; }
+  if(arg==2){ var url = "form_educacion_usuario/"+id_usuario+""; }
+  if(arg==3){ var url = "form_publicaciones_usuario/"+id_usuario+""; } //leccion 11
+  if(arg==4){ var url = "form_proyectos_usuario/"+id_usuario+""; } //leccion 11
+  
+  $("#contenido_capa_edicion").html($("#cargador_empresa").html());
+  $.get(url,function(resul){
+  $("#contenido_capa_edicion").html(resul);
+  })
+
+}

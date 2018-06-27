@@ -1,0 +1,47 @@
+<div class="col-md-6">
+
+        <div class="box box-primary">
+                <div class="box-body box-profile">
+                  <?php if($usuario->imagenurl==""){ $usuario->imagenurl="imagenes/avatar.jpg"; }  ?>           
+                  <img class="profile-user-img img-responsive img-circle" src="<?=  $usuario->imagenurl;  ?>" alt="User profile picture">
+                  <h3 class="profile-username text-center"><?= $usuario->nombres." ".$usuario->apellidos; ?></h3>
+                  <p class="text-muted text-center"><?= $usuario->ocupacion; ?></p>
+                  
+                  <div id="notificacion_resul_faprd"></div>
+                  <ul class="list-group list-group-unbordered">
+                  
+                  
+                  <?php foreach($investigaciones->get() as $archivo){  ?>
+                  <li class="list-group-item">
+                  <i class="fa fa-file-pdf-o"></i></i><b>-investigacion</b> <a class="pull-right"></a>
+                  
+                        
+                   <br/> <i class="fa fa-circle-o text-yellow"></i> <span class="text-light-blue" >-<?=  $archivo->titulo;  ?></span>
+                   <br/> <span><b>integrantes: </b>-<?=  $archivo->integrantes;  ?></span>    <span class="tools pull-right" ><a href="javascript:void(0);" onclick="borrarproyecto(<?= $archivo->id;  ?> );"  ><i class="fa fa-trash-o"></i></a></span>
+                   <br/> <span><b>Descripcion: </b>-<?=  $archivo->descripcion;  ?></span>
+                    <br/> <span><b>Objetivo: </b>-<?=  $archivo->objetivo;  ?></span>
+                   
+                     <br/>
+                     <span><b>año: </b>-<?=  $archivo->fecha;  ?></span>
+                   <br/><a href="<?= url($rutaarchivos.$archivo->ruta)  ?>" style="display:block;" target="_blank"><button class="btn  btn-success btn-xs">Ver archivo online</button></a>
+                                           
+                   
+                  </li>
+
+                   <?php } ?>
+
+                   
+                  </ul>
+class="formarchivo"  enctype="multipart/form-data"  
+class="form-horizontal form_entrada"
+
+       $usuario=User::find();
+      $investigaciones= $usuario->investigaciones();
+       $rutaarchivos= "../storage/archivos/";
+
+       return view("formularios.form_nueva_investigaciones_usuario")
+
+       ->with("usuario",$usuario)
+       ->with("investigaciones",$investigaciones) 
+
+       ->with("rutaarchivos",$rutaarchivos);
