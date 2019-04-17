@@ -228,7 +228,7 @@ El Centro de Estudios Sociales y Culturales (CESyC) de la Universidad Bolivarian
 <div class="form-group  ">
 <div id="comentariosn"></div>
 
-<form  id="nuevo_comentario"  method="post"  action="agregar_comentario" class="formarchivo"  >                
+<form  id="nuevo_comentario"  method="post"  action="agregar_comentario" class="formarchivonew"  >                
   <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"> 
                    <input type="hidden" name="id_con" value="<?= $usu->id; ?>"> 
                  <input type="hidden" name="tipo_publicacion" value="7">   
@@ -650,15 +650,15 @@ font-size: 24px;
                                                                               <p style="font-weight: bold; text-align: center;">Investigaciones</p>
                                                                               <br>
 
- <div class="col-md-5 b" style="color: black;"> <span class="glyphicon glyphicon-certificate ico"></span> <br> Investigaciones iniciadas <p class="re">  <?=  $infuco->count();  ?></p></div>
+ <a href="javascript:void(0);" onclick="cargarlistado(5,1);"><div class="col-md-5 b" style="color: black;" onClick="sessionStorage.setItem('id', '1')"> <span class="glyphicon glyphicon-certificate ico"></span> <br> Investigaciones iniciadas <p class="re">  <?=  $infuco->count();  ?></p></div></a>
 
-<div class="col-md-5 y" style="color: black;"> <span class="glyphicon glyphicon-pencil ico"></span> <br> Investigaciones en curso<p class="re" ><?=  $incuco->count();  ?></p></div>
+<a href="javascript:void(0);" onclick="cargarlistado(5,1);"><div class="col-md-5 y" style="color: black;" onClick="sessionStorage.setItem('id', '2')"> <span class="glyphicon glyphicon-pencil ico"></span> <br> Investigaciones en curso<p class="re" ><?=  $incuco->count();  ?></p></div></a>
 
-<div class="col-md-5 v" style="color: black;"><span class="glyphicon glyphicon-ok ico"></span> <br> Investigaciones completados <p class="re" ><?=  $incomco->count();  ?></p></div>
+<a href="javascript:void(0);" onclick="cargarlistado(5,1);"><div class="col-md-5 v" style="color: black;" onClick="sessionStorage.setItem('id', '3')"><span class="glyphicon glyphicon-ok ico"></span> <br> Investigaciones completados <p class="re" ><?=  $incomco->count();  ?></p></div></a>
 
-<div class="col-md-5 r" style="color: black;"><span class="glyphicon glyphicon-remove ico"></span> <br> Investigaciones incompletas <p class="re" ><?=  $inicomco->count();  ?></p></div>
 
-<a href="javascript:void(0);" onclick="cargarlistado(5,1);"> <div class="col-md-5 ac" style="color: black;"> <span class="glyphicon glyphicon-stats ico"></span> <br>  Total de Investigacones <p class="re"><?=  $intoco->count();  ?></p></div></a>
+<a href="javascript:void(0);" onclick="cargarlistado(5,1);"> <div class="col-md-5 ac" style="color: black;" onClick="sessionStorage.setItem('id', '5')"> <span class="glyphicon glyphicon-stats ico"></span> <br> 
+ Total de Investigacones <p class="re"><?=  $intoco->count();  ?></p></div></a>
                   </div>
                                     <div class="alert alert-default col-md-6" align="center">
                                                                               <p style="font-weight: bold;">P.I.D.A</p>
@@ -677,6 +677,8 @@ font-size: 24px;
 
 
 <script>
+
+
  function cargarnucleo(){
 $('#nucleo option:eq(<?= $usuarios->nucleo; ?>)').prop('selected', true);  
 }

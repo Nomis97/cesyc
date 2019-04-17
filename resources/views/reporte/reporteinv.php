@@ -117,7 +117,7 @@ font: 12px arial, sans-serif;
 <?php foreach($resi as $residuo){  ?>
 <?php  if($rei->id==$residuo->idinves){   ?>
 
-    <p ><b><?= $residuo->fecha; ?>:</b> 
+    <p ><b><?= date("d-m-Y, g:i a", strtotime($residuo->fecha)); ?>:</b> 
 
 <?php foreach($usuariosn as $usuario){  ?>
 <?php  if($usuario->id==$residuo->integrante){   ?>
@@ -125,7 +125,7 @@ font: 12px arial, sans-serif;
                                <?php } ?>
                                <?php } ?>
                                <?php  if($residuo->integrante==0 || $residuo->integrante!=0){   ?>
-    La fecha se cambio a: <b><?= $residuo->descripcion; ?></b>.
+    La fecha se cambio a: <b><?= date("d-m-Y, g:i a", strtotime($residuo->descripcion)); ?></b>.
                                    <?php } ?>
     </p>
 

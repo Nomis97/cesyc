@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
      <link rel="stylesheet" href="css/sistemalaravel.css">
+     <link rel="stylesheet" href="plugins/scroll/scroll.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -73,7 +74,46 @@
           <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
           </a>
+         <!-- pilladas kitty love -->
+                     <?php if(Auth::user()->tipoUsuario == '3' ) {?> 
+
+<span class="dropdown" onclick="noticlick()">
+  <a href="#"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <span title="Notificaciones" style=" color:red;"> <li style=" color:white; font-size: 20px; top: 15px;" class="glyphicon glyphicon-bell">
+    </li>   
+   <span id="notificacion"> <?php if ($inves>0) { echo $inves; } ?> </span> </span>
+  </a>
+  <ul class="dropdown-menu scrol" aria-labelledby="dropdownMenu1" style="top: 30px;">
+                                <?php foreach ($inve as $inv)  {  ?>
+    <li>
+                                                     <?php if($inv->pclave == 'Investigacion') {?> 
+      <a href="javascript:void(0);" onclick="mostrarficha8(<?= $inv->id; ?>);">
+        <?php }elseif ($inv->ruta != '') {  ?>
+      <a href="<?= $rutaarchivos.$inv->ruta;  ?>"  target="_blank">
+
+
+<?php } ?>
+
+    <!--  <?= $fechaFormateada = date("d-m-Y, g:i a", strtotime($inv->created_at)); ?> -->
+    <div style="text-align: center;">
+      
+            <?=  $inv->pclave. " de " .$inv->user->nombres ?> 
+            <br>
+            <b><?= $inv->titulo; ?></b>
+<br><span><?= $fechaFormateada; ?></span>
+    </div>
+</a>
+</li>
+  <li role="separator" class="divider" style="background-color: grey;"></li>
+
+    <?php } ?>
+  </ul>
+</span>
+
+<?php } ?>
+
           <div class="navbar-custom-menu">
+
             <ul class="nav navbar-nav">
 
               <!-- Messages: style can be found in dropdown.less-->
@@ -95,7 +135,8 @@
                       <small>Centro Social y Cultural</small>
                     </font>
                     </p>
-                  </l>
+                  </li>
+
                   <!-- Menu Footer-->
 
                   <li class="user-footer ">
@@ -114,6 +155,7 @@
                     </div>
                   </li>
                 </ul>
+
               </li>
               <!-- Control Sidebar Toggle Button -->
               <li>
@@ -265,8 +307,14 @@
 
                 <li class="active"><a href="javascript:void(0);" onclick="cargarformulario(6);"><i class="glyphicon glyphicon-menu-right"></i>Crear Investigacion</a></li>
                                                           <?php } ?>
+                <?php if(Auth::user()->tipoUsuario == '3'){?>
 
-                <li class="active"><a href="javascript:void(0);" onclick="cargarlistado(5,1);" ><i class="glyphicon glyphicon-menu-right"></i>Investigaciones publicadas</a>                </li>
+                <li class="active" onClick="sessionStorage.setItem('id', '5')"><a href="javascript:void(0);" onclick="cargarlistado(5,1);" ><i class="glyphicon glyphicon-menu-right" ></i>Investigaciones publicadas</a>                </li>
+                                                                          <?php }else{ ?>
+<li class="active"><a href="javascript:void(0);" onclick="cargarlistado(5,1);" ><i class="glyphicon glyphicon-menu-right" ></i>Investigaciones publicadas</a>                </li>
+
+                                                                          <?php } ?>
+
                 <?php if(Auth::user()->tipoUsuario == '1'){?>
 
                 <li class="active"><a href="javascript:void(0);" onclick="cargarlistado(21,1);" ><i class="glyphicon glyphicon-menu-right"></i>Investigaciones colectivas</a></li>
@@ -465,7 +513,9 @@
     <!-- Bootstrap WYSIHTML5 -->
     <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
     <!-- Slimscroll -->
-    <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="plugins/slimScroll/jquery.slimscroll.js"></script>
+        <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+
     <!-- FastClick -->
     <script src="plugins/fastclick/fastclick.min.js"></script>
     <!-- AdminLTE App -->
@@ -474,14 +524,15 @@
     <script src="dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
- 
+     <script src="plugins/scroll/scrolljs.js"></script>
+
         <script src="plugins/pace/pace.min.js"></script>
 
 
  <!-- javascript del sistema laravel -->
        <script src='js/autosize.js'></script>
 
-   <script src="js/sistemalaravel.js"></script>
+   <script src="js/sistemalarave.js"></script>
     <script src="js/highchart.js"></script>
         <script src="js/pdf.js"></script>
 
@@ -490,7 +541,34 @@
 
 
    <script>cargarlistado(1);</script>
+     <input type="hidden" id="token" name="_token" value="<?php echo csrf_token(); ?>">              
 
+    <script type="text/javascript">
+      function noticlick() {
+
+var token = $("#token").val();
+
+        $.ajax({
+          url: "noti",
+          headers: {'X-CSRF-TOKEN': token},
+          type: "POST",
+          processData:false,
+          success: function(data){
+            $("#notificacion").remove();                  
+            $("#notification-latest").show();$("#notification-latest").html(data);
+          },
+          error: function(){}           
+        });
+      }
+                                 
+      $(document).ready(function() {
+        $('body').click(function(e){
+          if ( e.target.id != 'notification-icon'){
+            $("#notification-latest").hide();
+          }
+        });
+      });   
+    </script>
 
   </body>
 </html>

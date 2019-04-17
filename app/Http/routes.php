@@ -42,7 +42,8 @@ Route::group(['middleware' => 'auth'], function () {
 
       Route::get('/', 'HomeController@index');
   Route::get('home', 'HomeController@index');
-  
+    Route::post('noti', 'HomeController@noti');
+
       Route::get('info_datos_usuario/{id}', 'UsuariosController@info_datos_usuario');
 
             Route::get('menu', 'UsuariosController@menu');

@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Requests\Requestregis;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
+use App\Investigaciones;
+
 use Session;
 class AuthController extends Controller
 {
@@ -73,7 +75,14 @@ class AuthController extends Controller
     {
 
         $usuarioactual=\Auth::user();
-       return view('home')->with("usuario",  $usuarioactual);
+ $inves=Investigaciones::where('noti', 0)->count();
+  $inve=Investigaciones::orderBy('id','desc')->get();
+         $rutaarchivos= "../storage/archivos/";
+
+       return view('home')->with("usuario",  $usuarioactual)
+->with("inves", $inves)
+->with("rutaarchivos", $rutaarchivos)
+->with("inve", $inve);
     }
 
     return redirect('login') 

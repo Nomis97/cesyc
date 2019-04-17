@@ -10,7 +10,7 @@
 
             <div id="notificacion_resul_fap"></div>
 
-            <form  id="f_agregar_publicacion"  method="post"  action="agregar_publicacion_usuario" class="formarchivo" >                
+            <form  id="f_agregar_publicacion"  method="post"  action="agregar_publicacion_usuario" class="formarchivonew" >                
                
                  <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"> 
                  <input type="hidden" name="id_usuario" value="<?= $usuarios->id; ?>">   

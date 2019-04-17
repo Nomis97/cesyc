@@ -18,7 +18,7 @@ use App\TipoInvestigaciones;
 use App\Proyectos;
 use App\Investigaciones;
 use App\coment;
-
+use Mail;
 use App\Http\Requests\UsuarioRequest;
 use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
@@ -418,11 +418,11 @@ public function agregar_comentario(Request $request)
 
 	}
 
-
 	public function cambiar_password(Request $request){
         $email=$request->input("email_usuario");
         $usuariactual=\Auth::user();
-        
+        $cormail=\Auth::user()->email;
+        $message='Contraseña cambiada exitosamente';
         if($usuariactual->email != $email ){
 		
 		$reglas = array('email_usuario' => 'required|Email|');
@@ -444,6 +444,11 @@ public function agregar_comentario(Request $request)
 
 	    if($r){
            return view("mensajes.msj_correcto")->with("msj","password actualizado");
+           Mail::send('correo.correomail', function($msj){
+
+$msj->subject($message);
+$msj->to($cormail);
+           }); 
 	    }
 	    else
 	    {

@@ -424,12 +424,8 @@ $(document).on("submit",".formarchivo",function(e){
         if(nombreform=="f_residuo" ){ var miurl="residuo";  var divresul="notificacion_resul_fei"; rs=false; }
 
         if(nombreform=="edi_proyectos" ){ var miurl="editar_pida";  var divresul="notificacion_resul_edi"; rs=true; }
-         if(nombreform=="nuevo_comentario"){ var miurl="agregar_comentario"; var divresul="comentariosn";   }
 
-        if(nombreform=="f_agregar_proyectos" ){ var miurl="agregar_proyectos_usuario";  var divresul="notificacion_resul_fapr"; rs=true; }
         if(nombreform=="f_cargar_datos_usuarios" ){ var miurl="cargar_datos_usuarios";  var divresul="notificacion_resul_fcdu"; rs=true; }
-        if(nombreform=="f_agregar_publicacion" ){ var miurl="agregar_publicacion_usuario";  var divresul="notificacion_resul_fap"; rs=true; }
-        if(nombreform=="f_nueva_investigacion" ){ var miurl="agregar_investigaciones_usuario";  var divresul="notificacion_resul_fai"; rs=true; }          
           if(nombreform=="f_editar_investigacion" ){ var miurl="editar_investigaciones";  var divresul="notificacion_resul_fei";   }
     if(nombreform=="f_enviar_correo" ){ var miurl="enviar_correo";  var divresul="contenido_principal";   }
 
@@ -463,7 +459,95 @@ $(document).on("submit",".formarchivo",function(e){
             //una vez finalizado correctamente
 
          success: function(data){
+              $("#"+divresul+"").html(data);
+                      $("#capa_vadil").show();
+                      $("#capa_para_vadil").show();
+              $("#fotografia_usuario").attr('src', $("#fotografia_usuario").attr('src') + '?' + Math.random() );  
+                        if(rs ){$('#'+nombreform+'').trigger("reset");}
+                        if(nombreform=="f_agregar_proyectos"){ var url = "form_proyectos_usuario/" }
+                        if(nombreform=="f_nueva_investigacion"){ var url = "form_nueva_investigaciones_usuario/" }
+                        if(nombreform=="f_editar_investigacion"){ var url = "listado_investigaciones/" }
 
+                        
+                    },
+
+            //si ha ocurrido un error
+
+
+
+error: function(data){
+
+                     var lista_errores="";
+                     var errors = $.parseJSON(data.responseText);
+                      $("#capa_vadil").show();
+                      $("#capa_para_vadil").show();
+                     var titulo="<br/><div class='rechazado'><label >Aun tiene que rellenar algunos campos necesarios.</label><ul>";
+                      $.each(errors,function(index, value) {
+                             lista_errores+='<li style="color:#FA206A;">'+value+'</li>';
+                      })
+                     var footer="</ul></div>";
+                     var htmlmensaje= titulo+lista_errores+ footer;
+                     
+                     $("#"+divresul+"").html(htmlmensaje); 
+                    
+      
+                    }
+
+    });
+
+irarriba();
+
+});
+
+$(document).on("submit",".formarchivonew",function(e){
+
+
+        e.preventDefault();
+        var formu=$(this);
+        var nombreform=$(this).attr("id");
+        var rs=false; //leccion 10
+        var seccion_sel=  $("#seccion_seleccionada").val();
+
+
+         if(nombreform=="nuevo_comentario"){ var miurl="agregar_comentario"; var divresul="comentariosn";   }
+        if(nombreform=="f_agregar_proyectos" ){ var miurl="agregar_proyectos_usuario";  var divresul="notificacion_resul_fapr"; rs=true; }
+        if(nombreform=="f_agregar_publicacion" ){ var miurl="agregar_publicacion_usuario";  var divresul="notificacion_resul_fap"; rs=true; }
+        if(nombreform=="f_nueva_investigacion" ){ var miurl="agregar_investigaciones_usuario";  var divresul="notificacion_resul_fai"; rs=true; }  
+
+        //información del formulario
+        var formData = new FormData($("#"+nombreform+"")[0]);
+
+        //hacemos la petición ajax   
+
+        $.ajax({
+
+            url: miurl,  
+            type: 'POST',
+     
+            // Form data
+            //datos del formulario
+                dataType: "html",
+            data: formData,
+            //necesario para subir archivos via ajax
+            cache: false,
+            contentType: false,
+            processData: false,
+            //mientras enviamos el archivo
+
+
+      
+ 
+            beforeSend: function(){
+
+              $("#"+divresul+"").html($("#cargador_empresa").html());                
+            },
+            //una vez finalizado correctamente
+
+         success: function(data){
+              var value = $('#notificacion').text();
+              value++;
+              $('#notificacion').text(value)
+              $('#notificacion').text();
               $("#"+divresul+"").html(data);
                       $("#capa_vadil").show();
                       $("#capa_para_vadil").show();

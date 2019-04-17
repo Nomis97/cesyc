@@ -177,7 +177,7 @@ $data=$request->all();
 
              $proyecto->fepro=$request->input('fepro');
 
-             $proyecto->fechaini2=$request->input('fechaini2');
+             $proyecto->pclave="Proyecto";
              $proyecto->fechafina2=$request->input('fechafina2');
              $proyecto->fepro=$request->input('fepro');
 

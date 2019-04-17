@@ -6,7 +6,11 @@
       <div class="box box-primary">
                         
             <div class="box-header">
-                <h3 class="box-title">Agregar P.I.D.A</h3> </div>
+                <h3 class="box-title">Agregar P.I.D.A</h3> <br>  
+                <label><input type="radio" checked="checked" id="estado_investigacion" name="estado_investigacion" value="1"  onchange="mostrardiv_face(this.value);">Crear nuevo.</label>
+                <br>
+                <label><input type="radio" id="estado_investigacion" name="estado_investigacion" value="2"  onchange="mostrardiv_face(this.value);">Subir archivo ya existente.</label>
+ </div>
 
            <!-- /.box-header  class="form-horizontal form_entrada" enctype="multipart/form-data" 
 
@@ -73,13 +77,13 @@ span.onclick = function() {
 }
 </script>
 
-            <form  id="f_agregar_proyectos"  method="post"  action="agregar_proyectos_usuario" class="formarchivo"  enctype="multipart/form-data"> 
+            <form  id="f_agregar_proyectos"  method="post"  action="agregar_proyectos_usuario" class="formarchivonew"  enctype="multipart/form-data"> 
                  <input type="hidden" name="id_usuario" value="<?= $nu->id ?>">   
                  <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"> 
-               <div class="box-body ">
+               <div class="box-body">
 
 <div id="capa_para_b" class="div_contenib" ><h2>¿Guardar esta investigación?</h2> <button type="submit" class="btn btn-default cls" title="Guardar" style="font-weight: bold;">Aceptar</button><div class="btn btn-default cl" style="font-weight: bold;"> Cancelar</div> </div>
-                                                        <div id="capa_para_vadil" class="div_contenid" ><span class="glyphicon glyphicon-remove clos"></span> <div id="notificacion_resul_fapr"></div> </div>
+              <div id="capa_para_vadil" class="div_contenid" ><span class="glyphicon glyphicon-remove clos"></span> <div id="notificacion_resul_fapr"></div> </div>
                               <label for="titulo"></label>
                              <input type="text" class="form-control" id="titulo" name="titulo" placeholder="(Aqui va el titulo)" style="text-align: center; color: #0099ff; font-size: x-large; font-weight: bold;">
 

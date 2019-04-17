@@ -260,6 +260,7 @@ $inves=TipoInvestigaciones::all();
 
              $investigacion->nucleo=$request->input('nucleo');
                           $investigacion->pause=$request->input('pause');
+                          $investigacion->pclave="Investigacion";
 
              if($archivo==""){$archivo=="";}else{
 

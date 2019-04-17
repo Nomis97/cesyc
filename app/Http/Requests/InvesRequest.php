@@ -31,7 +31,7 @@ class InvesRequest extends Request
     {
         return [                        
                         'lineal' => 'required|not_in:0',
-                        'titulo_investigacion' => 'required|alpha_num',
+                        'titulo_investigacion' => 'required',
                         'descripcion_investigacion' => 'required',
                         'tipo_investigacion' => 'required|not_in:0',
                         'objetivo_investigacion' => 'required',

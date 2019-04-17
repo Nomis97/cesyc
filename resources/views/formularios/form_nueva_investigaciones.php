@@ -1,3 +1,10 @@
+<style type="text/css">
+.img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
 <div class="row">  
 
  <div class="col-md-12">
@@ -26,15 +33,16 @@ span.onclick = function() {
 
 }
 </script>
-            <form  id="f_nueva_investigacion"  method="post"  action="agregar_investigaciones_usuario" class="formarchivo"   enctype="multipart/form-data">              
+            <form  id="f_nueva_investigacion"  method="post"  action="agregar_investigaciones_usuario" class="formarchivonew"   enctype="multipart/form-data">              
 <div id="capa_para_b" class="div_contenib" >
+  <img src="imagenes/warning.png" style="width:10%;" class="img">
   <h2>¿Guardar esta investigación?</h2> 
 
   <button type="submit" class="btn btn-default cls" title="Guardar" style="font-weight: bold;">Aceptar</button>
 
   <div class="btn btn-default cl" style="font-weight: bold;"> Cancelar</div> 
 </div>
-                                                        <div id="capa_para_vadil" class="div_contenid" ><span class="glyphicon glyphicon-remove clos"></span> <div id="notificacion_resul_fai"></div> </div>
+                                                        <div id="capa_para_vadil" class="div_contenid" ><span class="glyphicon glyphicon-remove clos"></span> <img src="imagenes/Blinking_warning.gif" style="width:10%;" class="img"><div id="notificacion_resul_fai"></div> </div>
 
                                                <input type="hidden" name="id_usuario"  value="<?= $usuario->id ?>">
                               
@@ -62,10 +70,7 @@ span.onclick = function() {
                                <option selected="true" value="0">--</option>
                                 <?php foreach($linea as $tipo){  ?>
                                    <option value="<?= $tipo->id; ?>"> <?= $tipo->nombrel; ?> </option>
-                                
-
                                 <?php } ?>
-                                
                                </select>
                        </div>
 
@@ -125,15 +130,13 @@ $("#selectlist").on("change", function() {
                              <span style="color: red; font-size: 190%">*</span> <label for="apellido">Titulo de la Investigación</label>
                               <input type="text" class="form-control" id="titulo_investigacion" name="titulo_investigacion" value="">
                               <div id="mensaje1" class="errores">Titulo requerido</div>
-
                          </div>
+
         <div class=" form-group col-xs-4 ">
                               <label for="pais"></label>
                                <select id="forma" name="forma" class="form-control" onchange="mostrardiv_forma(this.value);">
                                    <option value="1" >Investigación Individual</option>
                                    <option value="2" >Investigación Colectiva</option>
-
-                                
                                </select>
                        </div>
 
@@ -143,7 +146,7 @@ $("#selectlist").on("change", function() {
         <div class=" tools pull-right col-xs-2 ">
           <b>integrante 6</b>
 
-                               <select id="id_usuario6" name="id_usuario6" class="form-control list1 usu lind"  onchange="ocult(this.value)">
+                               <select id="id_usuario6" name="id_usuario6" class="form-control select list1 usu lind"  onchange="ocult(this.value)">
 
 <option></option>
 <?php foreach($usuarline as $usuario){  ?>
@@ -156,42 +159,21 @@ $("#selectlist").on("change", function() {
 <?php }?>
 <div>
 <script>
-  function ocult(arg){
-  $(".ocul, .ocul2, .ocul3, .ocul4, .ocul5").children('#lin52, #lin42, #lin32, #lin22, #lin12').each(function () {
-    if ($(this).val() == arg) {
-      $(this).hide();
-    }   });
-}
- function ocult2(oc){
-  $(".usu, .ocul2, .ocul3, .ocul4, .ocul5").children('.lind2, #lin42, #lin32, #lin22, #lin12').each(function () {
-    if ($(this).val() == oc) {
-      $(this).hide();
-    }   });
-}
- function ocult3(ac){
-  $(".usu, .ocul, .ocul3, .ocul4, .ocul5").children('.lind2, #lin52, #lin32, #lin22, #lin12').each(function () {
-    if ($(this).val() == ac) {
-      $(this).hide();
-    }   });
-}
- function ocult4(ec){
-  $(".usu, .ocul2, .ocul, .ocul4, .ocul5").children('.lind2, #lin42, #lin52, #lin22, #lin12').each(function () {
-    if ($(this).val() == ec) {
-      $(this).hide();
-    }   });
-}
- function ocult5(ic){
-  $(".usu, .ocul2, .ocul3, .ocul, .ocul5").children('.lind2, #lin42, #lin32, #lin52, #lin12').each(function () {
-    if ($(this).val() == ic) {
-      $(this).hide();
-    }   });
-}
- function ocult6(uc){
-  $(".usu, .ocul2, .ocul3, .ocul4, .ocul").children('.lind2, #lin42, #lin32, #lin22, #lin52').each(function () {
-    if ($(this).val() == uc) {
-      $(this).hide();
-    }  });
-}
+$('.select').change(function() {
+    var myOpt = [];
+    $(".select").each(function () {
+        myOpt.push($(this).val());
+    });
+    $(".select").each(function () {
+        $(this).find("option").prop('disabled', false);
+        var sel = $(this);
+        $.each(myOpt, function(key, value) {
+            if((value != "") && (value != sel.val())) {
+                sel.find("option").filter('[value="' + value +'"]').prop('disabled', true);
+            }
+        });
+    });
+});
 </script>
 
 <!--   <script>
@@ -212,7 +194,7 @@ $("#selectlist").on("change", function() {
                        </div>
         <div class=" tools pull-right col-xs-2 ">
           <b>integrante 5</b>
-                               <select id="id_usuario5" name="id_usuario5" class="form-control list2 ocul lin5" onchange="ocult2(this.value)" >
+                               <select id="id_usuario5" name="id_usuario5" class="form-control select list2 ocul lin5" onchange="ocult2(this.value)" >
                                                                                                  <option ></option>
 
 <?php foreach($usuarline as $usuario){  ?>
@@ -229,7 +211,7 @@ $("#selectlist").on("change", function() {
                        </div>        <div class=" tools pull-right col-xs-2 ">
                                   <b>integrante 4</b>
 
-                               <select id="id_usuario4" name="id_usuario4" class="form-control list3 ocul2 lin4" onchange="ocult3(this.value)" >
+                               <select id="id_usuario4" name="id_usuario4" class="form-control select list3 ocul2 lin4" onchange="ocult3(this.value)" >
                                                                                                  <option ></option>
 
       <?php foreach($usuarline as $usuario){  ?>
@@ -243,7 +225,7 @@ $("#selectlist").on("change", function() {
                        </div>        <div class=" tools pull-right col-xs-2 ">
                                   <b>integrante 3</b>
 
-                               <select id="id_usuario3" name="id_usuario3" class="form-control list4 ocul3 lin3" onchange="ocult4(this.value)" >
+                               <select id="id_usuario3" name="id_usuario3" class="form-control select list4 ocul3 lin3" onchange="ocult4(this.value)" >
                                                                                                  <option ></option>
 
       <?php foreach($usuarline as $usuario){  ?>
@@ -258,7 +240,7 @@ $("#selectlist").on("change", function() {
                        </div>        <div class=" tools pull-right col-xs-2 ">
                                   <b>integrante 2</b>
 
-                               <select id="id_usuario2" name="id_usuario2" class="form-control list5 ocul4 lin2" onchange="ocult5(this.value)" >
+                               <select id="id_usuario2" name="id_usuario2" class="form-control select list5 ocul4 lin2" onchange="ocult5(this.value)" >
                                                                                                  <option ></option>
 
       <?php foreach($usuarline as $usuario){  ?>
@@ -273,7 +255,7 @@ $("#selectlist").on("change", function() {
                        </div>        <div class=" tools pull-right col-xs-2 ">
                                   <b>integrante 1</b>
 
-                               <select id="id_usuario1" name="id_usuario1" class="form-control list6 ocul5 lin1" onchange="ocult6(this.value)" >
+                               <select id="id_usuario1" name="id_usuario1" class="form-control select list6 ocul5 lin1" onchange="ocult6(this.value)" >
                                                                                                  <option value="" ></option>
       <?php foreach($usuarline as $usuario){  ?>
 <?php foreach($linea as $line){   ?>

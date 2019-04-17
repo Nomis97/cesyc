@@ -56,6 +56,20 @@ $('#search').keyup(function() {
 </script>
                                            <?php  if(Auth::user()->tipoUsuario == '3' || Auth::user()->tipoUsuario == '2'){   ?>
 
+                                            <script type="text/javascript">
+if (sessionStorage.id <= 4) {
+
+
+        x = sessionStorage.id;
+
+    $('#review').val(x).trigger('change');
+}else{document.getElementById("result").remove()}
+
+
+
+                                            </script>
+
+
 <div class="box box-primary">
 
 <nav class="navbar navbar-standard">
@@ -97,9 +111,10 @@ $('#search').keyup(function() {
 
       <select id="review" class="criteriaSelector btn btn-default tournament">
         <option value="all">Estado</option>
-        <option value="1">Investigacion futura</option>
-        <option value="2">En curso</option>
-        <option value="3">Finalizado</option>
+                                <?php foreach($estad as $estado){?>
+        <option value="<?= $estado->id; ?>"><?= $estado->nombre; ?></option>
+                        <?php }?>
+
       </select>
         </div>
 <div class="form-group">
@@ -122,6 +137,7 @@ $('#search').keyup(function() {
   <!-- Default panel contents -->
          <?php if( count($invt) >0){?>
   <!-- Table -->
+  
   <table  class="display table table-hover col-xs-12" cellspacing="0" width="100%" width="100%">
 
         <thead>
@@ -189,25 +205,25 @@ $formatted_dt2=Carbon\Carbon::parse($archivo->fecha); ?>
 -->  
         </td>
         <?php  if($archivo->estado==3 && $archivo->face4==""){   ?>
-        <td>FINALIZADO SIN CULMINAR</td>
+        <td style="background-color: #FF0000;">SIN CULMINAR</td>
         <?php }?>
                 <?php  if($archivo->estado==3 && $archivo->face4!=""){   ?>
-        <td>FINALIZADO</td>
+        <td style="background-color: #CCFF33;">FINALIZADO</td>
         <?php }?>
                 <?php  if($archivo->estado == 1 && $formatted_dt2 < $formatted_dt1){   ?>
-        <td>FINALIZADO SIN CULMINAR</td>
+        <td style="background-color: #FF0000;">SIN CULMINAR</td>
         <?php }?>
                         <?php  if($archivo->estado == 1 && $formatted_dt2 > $formatted_dt1){   ?>
-        <td>INICIADO</td>
+        <td style="background-color: #66CCFF ;">INICIADO</td>
         <?php }?>
         <?php  if($archivo->estado == 2 && $formatted_dt2 < $formatted_dt1 && $archivo->face4==""){   ?>
-        <td>FINALIZADO SIN CULMINAR</td>
+        <td style="background-color: #FF0000;">SIN CULMINAR</td>
         <?php }?>
                 <?php  if($archivo->estado == 2 && $formatted_dt2 > $formatted_dt1){   ?>
-        <td>EN CURSO</td>
+        <td style="background-color: #FFFF66 ;">EN CURSO</td>
         <?php }?>
                         <?php  if($archivo->estado == 2 && $formatted_dt2 < $formatted_dt1 && $archivo->face4!=""){   ?>
-        <td>FINALIZADO TIEMPO CUMPLIDO</td>
+        <td style="background-color: #CCFF33;">TIEMPO CUMPLIDO</td>
         <?php }?>
 
         <td>             
@@ -515,7 +531,9 @@ elseif ($formatted_dt1->diffInMonths($formatted_dt2) >= "13")
 $formatted_dt2=Carbon\Carbon::parse($archivo->fecha); ?>  
         <?=  $date_diff=$formatted_dt1->diffInYears($formatted_dt2);   ?>
 -->  
-        <?php  if($archivo->estado== 1 || $archivo->estado== 2 && $formatted_dt2 > $formatted_dt1){   ?>
+
+
+        <?php  if($archivo->estado== 2 && $formatted_dt2 > $formatted_dt1){   ?>
   <a href="javascript:void(0);" onclick="mostrarficha3(<?= $archivo->id; ?>);"  ><div class="btn v" title="MODIFICAR O CONTINUAR INV"><li style=" font-size: 24px;" class="glyphicon glyphicon-pencil"></li></div></a>
         <?php }?>
 
@@ -526,7 +544,7 @@ $formatted_dt2=Carbon\Carbon::parse($archivo->fecha); ?>
     <a href="javascript:void(0);" onclick="mostrarficha3(<?= $archivo->id; ?>);"  ><div class="btn v" title="Ver"><li style=" font-size: 24px;" class="glyphicon glyphicon-eye-open"></li></div></a>
         <?php }?>
                                     
-                <?php  if($archivo->estado==2 && $archivo->face4=="" && $formatted_dt2 < $formatted_dt1){   ?>
+                <?php  if($archivo->estado== 1 || $archivo->estado==2 && $archivo->face4=="" && $formatted_dt2 < $formatted_dt1){   ?>
     <a href="javascript:void(0);" onclick="mostrarficha9(<?= $archivo->id; ?>);"  ><div class="btn r" title="Ver Inv no finalizado"><li style=" font-size: 24px;" class="glyphicon glyphicon-eye-open"></li></div></a>
             <?php }?>
                 <?php  if($archivo->estado==2 && $archivo->face4 !="" && $formatted_dt2 < $formatted_dt1){   ?>
