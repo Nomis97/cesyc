@@ -705,7 +705,7 @@ if ($n!=0) {
   {
     //uncion para cargar los datos de cada usuario en la ficha
      $usuario=\Auth::user();
-        $contador=count($usuario);
+        $contador=$usuario->count();
                 $tiposeducacion=TipoEducacion::all();
         $tiposusuario=TipoUsuario::all();
                         $tiposinves=TipoInvestigaciones::all();
