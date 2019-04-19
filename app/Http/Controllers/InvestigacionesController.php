@@ -11,7 +11,7 @@ use App\Http\Requests\editinvRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Investigaciones;
 use App\User;
-use App\lineas;
+use App\Lineas;
 use App\TipoInvestigaciones;
 use App\esta;
 use App\Proyectos;
@@ -56,7 +56,7 @@ $usuarin=\Auth::user();
 $usuari=\Auth::user();
 $usuar=\Auth::user();
 $usuarline= User::get();  
-$linea=lineas::all();
+$linea=Lineas::all();
 $pro=$usuari->Proyectos();
 $inve=$usuar->Investigaciones();
 $inv=proyectos::all();
@@ -85,7 +85,7 @@ $inves=TipoInvestigaciones::all();
       $tou=User::orderBy('nombres', 'asc')->get();
       $usuarioactual=\Auth::user();
       $usuarline= User::Busqueda2($lineas,$dato)->get(); 
-      $linea=lineas::all(); 
+      $linea=Lineas::all(); 
       $paissel=$linea->find($lineas);
         return view('formularios.form_nueva_investigaciones')
       ->with("linea", $linea )
@@ -104,7 +104,7 @@ $inves=TipoInvestigaciones::all();
 $usuario=\Auth::user();
 $usuari=\Auth::user();
 $usuar=\Auth::user();
-$line=lineas::all();
+$line=Lineas::all();
 $pro=$usuari->Proyectos();
 $inve=$usuar->Investigaciones();
 $inv=proyectos::find($id);
@@ -153,7 +153,7 @@ $usuario=\Auth::user();
 $usuari=\Auth::user();
 $usuar=\Auth::user();
 
-                $line=lineas::all();
+                $line=Lineas::all();
                 $pro=$usuari->Proyectos();
 $inve=$usuar->Investigaciones();
 $inv=proyectos::find($id);
@@ -289,7 +289,7 @@ public function form_editar_investigacion($id)
         $investigaciones= $usuarios->investigaciones();
 
         $inves=Investigaciones::find($id);
-                $line=lineas::all();
+                $line=Lineas::all();
                 $usuar=User::all();
 
 $tou=User::orderBy('nombres', 'asc')->get();
@@ -321,7 +321,7 @@ public function investigacion_nofinal($id)
         $investigaciones= $usuarios->investigaciones();
 
         $inves=Investigaciones::find($id);
-                $line=lineas::all();
+                $line=Lineas::all();
 $tou=User::orderBy('nombres', 'asc')->get();
 $usuario=\Auth::user();
 $invesn=TipoInvestigaciones::all();
@@ -448,7 +448,7 @@ $investigacion->save();
 
         $usuariosn=user::all();
         $usuarioi=\Auth::user();
-        $linea=lineas::all();
+        $linea=Lineas::all();
 
         if (\Auth::user()->name !=0) {
         $invt=Investigaciones::orderBy('id', 'desc')->where('nucleo',$nucleo)->paginate(10);
@@ -502,7 +502,7 @@ $investigacion->save();
 
         $usuariosn=user::all();
         $usuarioi=\Auth::user();
-        $linea=lineas::all();
+        $linea=Lineas::all();
         $invt=Investigaciones::orderBy('id', 'desc')->paginate(10);
 
         $resi=residuo::all();
