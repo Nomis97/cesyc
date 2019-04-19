@@ -275,7 +275,7 @@ public function agregar_comentario(Request $request)
                 $line=Lineas::all();
                 $program=pfg::all();
 
-		$contador=count($usuario);
+		$contador=$usuario->count();
 		$tiposusuario=TipoUsuario::all();
 		
 		if($contador>0){          
