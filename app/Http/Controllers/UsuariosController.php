@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Excel;
 use App\Nucleo;
 use App\pfg;
-use App\lineas;
+use App\Lineas;
 use App\TipoUsuario;
 use App\Educacion;
 use App\TipoEducacion;
@@ -272,7 +272,7 @@ public function agregar_comentario(Request $request)
 	{
 		//funcion para cargar los datos de cada usuario en la ficha
 		$usuario=User::find($id);
-                $line=lineas::all();
+                $line=Lineas::all();
                 $program=pfg::all();
 
 		$contador=count($usuario);
