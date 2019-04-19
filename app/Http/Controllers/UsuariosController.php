@@ -600,7 +600,7 @@ public function borrar_usuario($id){
 
           $comen=coment::orderBy('id', 'desc')->get();
 
-        $contador=count($usuarios);
+        $contador=$usuarios->count();
                 $tiposeducacion=TipoEducacion::all();
         $tiposusuario=TipoUsuario::all();
                         $tiposinves=TipoInvestigaciones::all();
