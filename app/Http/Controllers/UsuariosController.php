@@ -929,7 +929,7 @@ if ($n!=0) {
           $usuarios=\Auth::user();
      $usuarios6=User::where('name','6')->get();
 
-        $contador=count($usuarios);
+        $contador=$usuarios->count();
         $tiposusuario=TipoUsuario::all();
                 $tiposinves=TipoInvestigaciones::all();
         $tipopublicaciones=TipoPublicaciones::all();
